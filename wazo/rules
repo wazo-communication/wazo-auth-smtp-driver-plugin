@@ -1,0 +1,31 @@
+#!/bin/sh
+# Copyright 2025 The Wazo Authors  (see the AUTHORS file)
+# SPDX-License-Identifier: GPL-3.0+
+
+case "$1" in
+    build)
+        ;;
+
+    package)
+        mkdir -p "${pkgdir}/usr/share/wazo-auth-smtp-driver-plugin"
+        cp wazo-auth-smtp-driver-plugin.patch "${pkgdir}/usr/share/wazo-auth-smtp-driver-plugin/wazo-auth-smtp-driver-plugin.patch"
+        ;;
+
+    install)
+        patch --verbose --reject-file - -p1 -d /usr/lib/python3/dist-packages/ < /usr/share/wazo-auth-smtp-driver-plugin/wazo-auth-smtp-driver-plugin.patch
+        systemctl restart wazo-auth
+        ;;
+
+    uninstall)
+        patch --verbose -p1 -R -d /usr/lib/python3/dist-packages/ < /usr/share/wazo-auth-smtp-driver-plugin/wazo-auth-smtp-driver-plugin.patch || true
+        systemctl restart wazo-auth
+        ;;
+
+    postrm)
+        ;;
+
+    *)
+        echo "$0 called with unknown argument '$1'" >&2
+        exit 1
+    ;;
+esac

@@ -1,0 +1,13 @@
+name: wazo-auth-smtp-driver-plugin
+namespace: wazocommunication
+version: 1.0.0
+author: Wazo authors
+display_name: Add SMTP driver to wazo-auth for custom emails
+plugin_format_version: 1
+min_wazo_version: '25.01'
+max_wazo_version: '25.02'
+tags:
+  - auth
+  - email
+  - smtp
+homepage: https://github.com/wazo-communication/wazo-auth-smtp-driver-plugin
